@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# a script that displays best school 10 times using while 
+# Bash script that displays Best School 10 times
 
-x=0
-while [ "$x" -lt 10 ];do
-    echo "Best School"
-      ((x++))
+counter=0
+
+until [ $counter -eq 10 ]
+do
+   echo "Best School"
+   ((counter++))
 done
