@@ -1,23 +1,30 @@
 #!/usr/bin/env bash
-#manages the manage_process
-file=/var/run/my_process.pid
-if [ "$1" == "start" ];
-then
-    ./manage_my_process &
-    sudo bash -c "echo $! > $file"
-    echo "manage_my_process started"
-elif [ "$1" == "stop" ];
-then
-    pkill -f ./manage_my_process
-    sudo rm $file
-    echo "manage_my_process stopped"
-elif [ "$1" == "restart" ];
-then
-    pkill -f ./manage_my_process
-    sudo rm $file
-    ./manage_my_process &
-    sudo bash -c "echo $! > $file"
-    echo "manage_my_process restarted"
-else
-    echo "Usage: manage_my_process {start|stop|restart}"
-f
+#Programs that are detached from the terminal and running in the background are called daemons or processes
+function start_process() {
+    # Start manage_my_process indefinitely
+    while true
+    do
+        echo "I am alive!" >> /tmp/my_process
+        sleep 2
+    done
+}
+
+function stop_process() {
+    # Stop manage_my_process and remove PID file
+    if [ -f /var/run/my_process.pid ]; then
+        kill "$(cat /var/run/my_process.pid)"
+        rm /var/run/my_process.pid
+    fi
+}
+
+case "$1" in
+    start)
+        # Start manage_my_process and save PID to file
+        start_process &
+        echo $! > /var/run/my_process.pid
+        echo "manage_my_process started"
+        ;;
+    stop)
+        # Stop manage_my_process and remove PID file
+        stop_process
+        echo "manage_my_process stopped"
