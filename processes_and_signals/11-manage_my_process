@@ -3,30 +3,30 @@
 
 # Start my process
 start() {
-        ./manage_my_process &
-        echo "$!" > /var/run/my_process.pid
+	./manage_my_process &
+	echo "$!" > /var/run/my_process.pid
 }
 
 stop() {
-        pkill -f ./manage_my_process
-        rm /var/run/my_process.pid
+	pkill -f ./manage_my_process
+	rm /var/run/my_process.pid
 }
 
-case "$1" in
-        start)
-                start
-                echo "manage_my_process started"
-                ;;
-        stop)
-                stop
-                echo "manage_my_process stopped"
-                ;;
-        restart)
-                stop
-                start
-                echo "manage_my_process restarted"
-                ;;
-        *)
-                echo "Usage: manage_my_process{start|stop|restart}"
-                ;;
+case "$1" in 
+	start)
+		start
+		echo "manage_my_process started"
+		;;
+	stop)
+		stop
+		echo "manage_my_process stopped"
+		;;
+	restart)
+		stop
+		start
+		echo "manage_my_process restarted"
+		;;
+	*)
+		echo "Usage: manage_my_process {start|stop|restart}"
+		;;
 esac
